@@ -1,0 +1,13 @@
+---
+version: "3"
+services:
+  streamlit:
+    image: ryosms/pixela-charts
+    build:
+      context: .
+    volumes:
+      - ./src:/app
+    ports:
+      - "8501:8501"
+    command: streamlit run pixela_chart.py
+    tty: yes
