@@ -1,6 +1,8 @@
+from datetime import date
+from pprint import pprint
 from typing import Optional
 
-from requests import Session, HTTPError
+from requests import HTTPError, Session
 
 
 class Pixela:
@@ -13,10 +15,10 @@ class Pixela:
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         }
-        self.last_error = ""
+        self._last_error = ""
 
     def last_error(self):
-        return self.last_error
+        return self._last_error
 
     def load_graph_definitions(self) -> Optional[dict]:
         res = self._get('')
@@ -26,16 +28,27 @@ class Pixela:
             for g in graph_list:
                 graph_defs[g['id']] = g
             return graph_defs
-        self.last_error = res.content
+        self._last_error = res.text
 
         return None
 
-    def _get(self, path: str):
+    def load_pixels(self, graph_id: str, from_date: date, to_date: date):
+        params = {'from': f"{from_date:%Y%m%d}",
+                  'to': f"{to_date:%Y%m%d}",
+                  'withBody': 'true'}
+        res = self._get(f"/{graph_id}/pixels", params)
+        if res.ok:
+            return res.json()['pixels']
+        return None
+
+    def _get(self, path: str, params: Optional[dict] = None):
         try:
             session = Session()
             session.headers = self.headers
+            if params:
+                session.params = params
             res = session.get(f"{self.base_endpoint}{path}")
             session.close()
             return res
         except HTTPError as e:
-            self.last_error = e.strerror
+            self._last_error = e.strerror
