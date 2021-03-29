@@ -2,9 +2,10 @@
 version: "3"
 services:
   streamlit:
-    image: ryosms/pixela-charts
+    image: ryosms/pixela-charts:dev
     build:
       context: .
+      target: dev
     volumes:
       - ./src:/app
     ports:
