@@ -9,4 +9,4 @@ RUN pip install streamlit==0.79.0
 FROM dev
 
 COPY src/ /app/
-CMD ["streamlit", "run", "pixela_chart.py"]
+CMD streamlit run pixela_chart.py --server.port $PORT
