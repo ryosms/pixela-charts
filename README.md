@@ -21,5 +21,5 @@ $ docker-compose run --service-port streamlit streamlit run your_streamlit_app.p
     ```
 1. Deploy to Cloud Run
     ```console
-    $ gcloud run deploy --image gcr.io/<YOUR-PROJECT-ID-HERE>/pixela-chart:latest
+    $ gcloud run deploy --image gcr.io/<YOUR-PROJECT-ID-HERE>/pixela-chart:latest --platform managed
     ```
