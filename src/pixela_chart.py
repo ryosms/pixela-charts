@@ -7,6 +7,8 @@ import streamlit as st
 import session_state
 from pixela import Pixela
 
+st.set_page_config(page_title='Pixela Chart', layout='wide')
+
 state = session_state.get_state()
 st.sidebar.title("Pixela Chart")
 username = st.sidebar.text_input("username")
