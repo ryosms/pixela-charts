@@ -4,7 +4,7 @@ from typing import Optional, Tuple
 from requests import Session
 
 GraphDefResult = Tuple[Optional[dict], Optional[str]]
-PixelsResult = Tuple[Optional[dict], Optional[str]]
+PixelsResult = Tuple[Optional[list], Optional[str]]
 
 
 class Pixela:
