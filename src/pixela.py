@@ -3,6 +3,9 @@ from typing import Optional, Tuple
 
 from requests import Session
 
+GraphDefResult = Tuple[Optional[dict], Optional[str]]
+PixelsResult = Tuple[Optional[dict], Optional[str]]
+
 
 class Pixela:
     def __init__(self, username, token):
@@ -15,7 +18,7 @@ class Pixela:
             'Accept': 'application/json'
         }
 
-    def load_graph_definitions(self) -> Tuple[Optional[dict], Optional[str]]:
+    def load_graph_definitions(self) -> GraphDefResult:
         res = self._get('')
         if res.ok:
             graph_defs = {}
@@ -25,7 +28,7 @@ class Pixela:
             return graph_defs, None
         return None, res.text
 
-    def load_pixels(self, graph_id: str, from_date: date, to_date: date) -> Tuple[Optional[dict], Optional[str]]:
+    def load_pixels(self, graph_id: str, from_date: date, to_date: date) -> PixelsResult:
         params = {'from': f"{from_date:%Y%m%d}",
                   'to': f"{to_date:%Y%m%d}",
                   'withBody': 'true'}
